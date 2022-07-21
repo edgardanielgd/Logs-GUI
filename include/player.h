@@ -13,7 +13,8 @@ class IP {
         unsigned char blocks[4]; // byte
         unsigned int port; // word
 
-        IP();
+        IP( string strIp );
+        IP(){};
         ~IP();
 
         friend bool operator< (const IP& current, const IP& comparedTo );
@@ -27,10 +28,25 @@ class IP {
         friend bool operator== (const IP& current, const IP& comparedTo );
 };
 
+class CustomTime {
+    public:
+        time_t time;
+    
+        friend bool operator< (const CustomTime& current, const CustomTime& comparedTo );
+
+        friend bool operator> (const CustomTime& current, const CustomTime& comparedTo);
+
+        friend bool operator<= (const CustomTime& current, const CustomTime& comparedTo);
+
+        friend bool operator>= (const CustomTime& current, const CustomTime& comparedTo);
+
+        friend bool operator== (const CustomTime& current, const CustomTime& comparedTo );
+};
+
 class Message{
     public:
         string value;
-        time_t msg_time;
+        CustomTime time;
 
         Message();
         ~Message();

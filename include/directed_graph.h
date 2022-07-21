@@ -2,7 +2,15 @@
 #define DIRECTED_GRAPH_H
 
 #include "linked_list.h"
+#include "player.h"
+
 #include <cstddef>
+
+template <typename KN, typename KV, typename V>
+struct DirectedGraphNode {
+    LinkedList<KN,DirectedGraphNode < KN, KV, V> > *directedTargets;
+    LinkedList<KV,V> *values;
+};
 
 template <typename K, typename KN, typename KV, typename V>
 /*
@@ -12,25 +20,44 @@ template <typename K, typename KN, typename KV, typename V>
     V <- Type of value (Player)   
 */
 class DirectedGraph {
+    private:
+        void deleteNodeData( DirectedGraphNode<KN,KV,V> *d){
+            delete d->values;
+            
+            if( d->directedTargets != NULL ){
+
+                LinkedListNode<KN, DirectedGraphNode<KN,KV,V>> *temp = d->directedTargets->first;
+
+                while( temp != NULL ){
+                    deleteNodeData( temp->value );
+                    temp = temp->next;
+                }
+
+                delete d->directedTargets;
+            }  
+            
+            delete d;    
+        };
+
     public:
 
         DirectedGraph(){};
-        ~DirectedGraph();
+        ~DirectedGraph(){
+            DirectedGraphNode<KN,KV,V> *temp = rootTargets;
 
-        bool isEmpty();
+            if( temp == NULL) return;
+            deleteNodeData( temp );
+        };
+
+        bool isEmpty(){
+            return (rootTargets == NULL);
+        };
         bool add( K key, KV key2, V* value );
         LinkedList<KV,V>* find( K key );
         V* find( K key, KV key2 );
         bool update( K key, KV key2, V* value);
 
-        struct DirectedGraphNode {
-            LinkedList<KN,DirectedGraphNode> *directedTargets;
-            LinkedList<KV,V> *values;
-        };
-
-        DirectedGraphNode *rootTargets = NULL;
+        DirectedGraphNode<KN,KV,V> *rootTargets = NULL;
     
-    private:
-        void deleteNodeData( DirectedGraphNode *d);
 };
 #endif
