@@ -10,6 +10,7 @@ template <typename KN, typename KV, typename V>
 struct DirectedGraphNode {
     LinkedList<KN,DirectedGraphNode < KN, KV, V> > *directedTargets;
     LinkedList<KV,V> *values;
+    KV lastKnownKey;
 };
 
 template <typename K, typename KN, typename KV, typename V>
@@ -52,6 +53,8 @@ class DirectedGraph {
         bool isEmpty(){
             return (rootTargets == NULL);
         };
+
+        DirectedGraphNode<KN,KV,V>* getNodeByKey( k key );
         bool add( K key, KV key2, V* value );
         LinkedList<KV,V>* find( K key );
         V* find( K key, KV key2 );

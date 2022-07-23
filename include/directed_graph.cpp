@@ -9,7 +9,7 @@ using namespace std;
 //===================================
 // DEFINITION BY NAMES MAPPING
 template <>
-bool DirectedGraph<string,char,IP,Player>::add( string key, IP key2, Player *value ){
+bool DirectedGraph<string,char,IP,Player>::getNodeByKey( string key, IP key2, Player *value ){
     const int length = key.length();
 
     DirectedGraphNode<char,IP,Player> *temp = rootTargets;
@@ -35,7 +35,17 @@ bool DirectedGraph<string,char,IP,Player>::add( string key, IP key2, Player *val
         temp = nextNode;
     }
 
-    return temp->values->add(key2, value);   
+    return temp;
+}
+
+template <>
+bool DirectedGraph<string,char,IP,Player>::add( string key, IP key2, Player *value ){
+
+    DirectedGraphNode<char,IP,Player> *temp = getNodeByKey( key );
+
+    temp->lastKnownKey = key2;
+
+    return temp->values->add(key2, value, true);   
 }
 
 template <>
@@ -83,7 +93,7 @@ bool DirectedGraph<string,char,IP,Player>::update( string key, IP key2, Player* 
 // DEFINITION BY IPS MAPPING (the one will be most used, since there are at most 4 levels in graph)
 
 template <>
-bool DirectedGraph<IP,int,string,Player>::add( IP key, string key2, Player *value ){
+bool DirectedGraph<IP,int,string,Player>::getNodeByKey( IP key, string key2, Player *value ){
     const int length = sizeof(key.blocks)/sizeof(key.blocks[0]);
 
     DirectedGraphNode<int,string,Player> *temp = rootTargets;
@@ -109,7 +119,17 @@ bool DirectedGraph<IP,int,string,Player>::add( IP key, string key2, Player *valu
         temp = nextNode;
     }
 
-    return temp->values->add(key2, value);   
+    return temp;
+}
+
+template <>
+bool DirectedGraph<IP,int,string,Player>::add( IP key, string key2, Player *value ){
+    
+    DirectedGraphNode<int,string,Player> = getNodeByKey( key );
+
+    temp->lastKnownKey = key2;
+
+    return temp->values->add(key2, value, true);   
 }
 
 template <>

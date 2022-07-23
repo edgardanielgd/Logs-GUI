@@ -48,9 +48,6 @@ class Message{
         string value;
         CustomTime time;
 
-        Message();
-        ~Message();
-
         friend bool operator< (const Message& current, const Message& comparedTo );
 
         friend bool operator> (const Message& current, const Message& comparedTo);
@@ -65,9 +62,11 @@ class Message{
 struct Player{
     string name;
     IP ip;
-    LinkedList<string, Message> *messages;
-    LinkedList<string, Message> *commands;
+    LinkedList<CustomTime, Message> *messages;
+    LinkedList<CustomTime, Message> *commands;
     double time_played;
+    bool playing;
+    time_t time_start_playing;
 };
 
 #endif

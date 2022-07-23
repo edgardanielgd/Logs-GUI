@@ -16,7 +16,10 @@ class DefaultDecoder : BaseDecoder {
         DefaultDecoder( string _folderPath);
         ~DefaultDecoder();
 
-        void readAndInsert();
+        void readAndInsert(
+            DirectedGraph<string,char,IP,Player> *& graphByName,
+            DirectedGraph<IP,int,string,Player> *& graphByIp
+        );
 
         struct file{
             string path;
