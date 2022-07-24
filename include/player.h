@@ -65,8 +65,6 @@ struct Player{
     LinkedList<CustomTime, Message> *messages;
     LinkedList<CustomTime, Message> *commands;
     double time_played;
-    bool playing;
-    time_t time_start_playing;
 };
 
 #endif

@@ -22,6 +22,7 @@ class LinkedList
         bool isEmpty();
         bool add( K key, V *value, bool updateOnExistence = false);
         bool update( K key, V *newValue);
+        V* delete( K key );
         V* find( K key );
 
         LinkedListNode<K,V> *first = NULL;
@@ -121,6 +122,33 @@ bool LinkedList<K,V>::update( K key, V* newValue){
     }
 
     return false;
+}
+
+template <typename K, typename V>
+V* LinkedList<K,V>::delete( K key ){
+    
+    if( isEmpty() ) return false;
+
+    LinkedListNode<K,V> *temp = first;
+    LinkedListNode<K,V> *temp2 = NULL;
+
+    while( key > (temp->key) ){
+        temp2 = temp;
+        temp = temp->next;
+
+        if( temp == NULL){
+            return NULL;
+        }
+    }
+
+    if( key == (temp->key) ){
+        temp2->next = temp->next;
+        V* value = temp->value;
+        delete temp;
+        return value;
+    }
+
+    return NULL;
 }
 
 template <typename K, typename V>
